@@ -636,6 +636,15 @@ extern memFree globalMemFree;
 
 extern memChk globalMemChk;
 
+// hongliwo
+
+extern int poolAllocatorInit(void *pMemPool, size_t bytes);
+extern void poolAllocatorDeinit(void);
+extern void *myMalloc(size_t bytes);
+extern void *myRealloc(void *ptr, size_t bytes);
+extern void *myCalloc(size_t num, size_t bytes);
+extern void myFree(void *ptr);
+
 //
 // Dynamic library loading function definitions
 //

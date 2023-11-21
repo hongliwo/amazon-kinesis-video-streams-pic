@@ -1,11 +1,15 @@
 #include "Include_i.h"
-
+#include "pool_allocator.h"
 //
 // Default allocator functions
 //
 PVOID defaultMemAlloc(SIZE_T size)
 {
+#ifdef USE_POOL_ALLOCATOR
+	return poolAllocatorMalloc(size);
+#else
     return malloc(size);
+#endif
 }
 
 PVOID defaultMemAlignAlloc(SIZE_T size, SIZE_T alignment)
@@ -23,17 +27,29 @@ PVOID defaultMemAlignAlloc(SIZE_T size, SIZE_T alignment)
 
 PVOID defaultMemCalloc(SIZE_T num, SIZE_T size)
 {
+#ifdef USE_POOL_ALLOCATOR
+	return poolAllocatorCalloc(num, size);
+#else
     return calloc(num, size);
+#endif
 }
 
 PVOID defaultMemRealloc(PVOID ptr, SIZE_T size)
 {
+#ifdef USE_POOL_ALLOCATOR
+	return poolAllocatorRealloc(ptr, size);
+#else
     return realloc(ptr, size);
+#endif
 }
 
 VOID defaultMemFree(VOID* ptr)
 {
+#ifdef USE_POOL_ALLOCATOR
+	poolAllocatorFree(ptr);
+#else
     free(ptr);
+#endif
 }
 
 memAlloc globalMemAlloc = defaultMemAlloc;
